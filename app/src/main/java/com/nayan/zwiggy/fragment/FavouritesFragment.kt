@@ -36,7 +36,6 @@ class FavouritesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_favourites, container, false)
         (activity as DrawerLocker).setDrawerEnabled(true)
         rlFav = view.findViewById(R.id.rlFavorites)
@@ -51,8 +50,6 @@ class FavouritesFragment : Fragment() {
         recyclerRestaurant = view.findViewById(R.id.recyclerRestaurants)
 
 
-        /*In case of favourites, simply extract all the data from the DB and send to the adapter.
-        * Here we can reuse the adapter created for the home fragment. This will save our time and optimize our app as well*/
         val backgroundList = FavouritesAsync(activity as Context).execute().get()
         if (backgroundList.isEmpty()) {
             rlLoading.visibility = View.GONE
@@ -85,7 +82,6 @@ class FavouritesFragment : Fragment() {
     }
 
 
-    /*A new async class for fetching the data from the DB*/
     class FavouritesAsync(context: Context) : AsyncTask<Void, Void, List<RestaurantEntity>>() {
 
         val db = Room.databaseBuilder(context, RestaurantDatabase::class.java, "res-db").build()

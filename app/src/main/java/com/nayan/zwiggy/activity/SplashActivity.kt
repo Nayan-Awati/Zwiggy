@@ -14,28 +14,21 @@ import com.nayan.zwiggy.util.SessionManager
 
 class SplashActivity : AppCompatActivity() {
 
-    /*Array of permissions to be used in the app*/
     val permissionString =
         arrayOf(Manifest.permission.ACCESS_NETWORK_STATE, Manifest.permission.INTERNET)
 
-    /*Variable for managing the session*/
     lateinit var sessionManager: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        /*Initialising the session*/
         sessionManager = SessionManager(this)
 
-        /*this if else block checks whether the permissions were granted or not
-        * If yes, then open the corresponding activity
-        * else request for permissions*/
         if (!hasPermissions(this, permissionString)) {
             ActivityCompat.requestPermissions(this, permissionString, 101)
         } else {
 
-            /*The handler delays the opening of the new activity thus displaying the logo for 2000 milliseconds i.e. 2 seconds*/
             Handler().postDelayed({
                 openNewActivity()
             }, 2000)
@@ -43,8 +36,6 @@ class SplashActivity : AppCompatActivity() {
 
     }
 
-    /*Function to check whether all the permission were granted or not
-    * In our application we won't be needing it as Internet is an admin permission and would be granted automatically*/
     fun hasPermissions(context: Context, permissions: Array<String>): Boolean {
         var hasAllPermissions = true
         for (permission in permissions) {
@@ -57,9 +48,6 @@ class SplashActivity : AppCompatActivity() {
     }
 
 
-    /*Function for opening the relevant activity
-    * If the user was already logged in, then open the dashboard activity
-    * else take the user to the login screen*/
     fun openNewActivity() {
         if (sessionManager.isLoggedIn()) {
             val intent = Intent(this, DashboardActivity::class.java)
@@ -72,7 +60,6 @@ class SplashActivity : AppCompatActivity() {
         }
     }
 
-    /*Android's function to check whether the permissions were granted or not*/
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -104,7 +91,6 @@ class SplashActivity : AppCompatActivity() {
         }
     }
 
-    /*Lifecycle method. Here the finish() ensures that the activity does not open again when the user presses back button*/
     override fun onPause() {
         super.onPause()
         finish()

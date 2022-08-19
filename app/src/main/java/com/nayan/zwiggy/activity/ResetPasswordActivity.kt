@@ -17,7 +17,6 @@ import com.nayan.zwiggy.util.RESET_PASSWORD
 import com.nayan.zwiggy.util.Validations
 import org.json.JSONObject
 
-/*The reset password activity resets the password, by sending the OTP along with the mobile number and the new password*/
 
 class ResetPasswordActivity : AppCompatActivity() {
 
@@ -161,7 +160,6 @@ class ResetPasswordActivity : AppCompatActivity() {
                     val headers = HashMap<String, String>()
                     headers["Content-type"] = "application/json"
 
-                    /*The below used token will not work, kindly use the token provided to you in the training*/
                     headers["token"] = "4b564f6ea2296c"
                     return headers
                 }

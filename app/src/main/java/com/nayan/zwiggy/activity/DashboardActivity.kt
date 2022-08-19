@@ -57,46 +57,33 @@ class DashboardActivity : AppCompatActivity(), DrawerLocker {
             sessionManager.PRIVATE_MODE
         )
 
-        /*Created by us to handle the initialisation of variables*/
         init()
 
-        /*This method is also user created to setup the toolbar*/
         setupToolbar()
 
-        /*User created method to handle the action bar drawer toogle*/
         setupActionBarToggle()
 
-        /*This is method is created to display the home fragment inside the activity by default*/
         displayHome()
 
-        /*Below we handle the click listeners of the menu items inside the navigation drawer*/
         navigationView.setNavigationItemSelectedListener { item: MenuItem ->
 
-            /*Unchecking the previous menu item when a new item is clicked*/
             if (previousMenuItem != null) {
                 previousMenuItem?.isChecked = false
             }
 
-            /*Highlighting the new menu item, the one which is clicked*/
             item.isCheckable = true
             item.isChecked = true
 
-            /*This sets the value of previous menu item as the current one*/
             previousMenuItem = item
 
 
-            /*The closing of navigation drawer is delayed to make the transition smooth
-            * We delay it by 0.1 second*/
             val mPendingRunnable = Runnable { drawerLayout.closeDrawer(GravityCompat.START) }
             Handler().postDelayed(mPendingRunnable, 100)
 
-            /*The fragment transaction takes care of the different fragments which will be opened and closed*/
             val fragmentTransaction = supportFragmentManager.beginTransaction()
 
-            /*Getting the id of the clicked item to identify which fragment to display*/
             when (item.itemId) {
 
-                /*Opening the home fragment*/
                 R.id.home -> {
                     val homeFragment = HomeFragment()
                     fragmentTransaction.replace(R.id.frame, homeFragment)
@@ -104,7 +91,6 @@ class DashboardActivity : AppCompatActivity(), DrawerLocker {
                     supportActionBar?.title = "All Restaurants"
                 }
 
-                /*Opening the profile fragment*/
                 R.id.myProfile -> {
                     val profileFragment = ProfileFragment()
                     fragmentTransaction.replace(R.id.frame, profileFragment)
@@ -112,7 +98,6 @@ class DashboardActivity : AppCompatActivity(), DrawerLocker {
                     supportActionBar?.title = "My profile"
                 }
 
-                /*Opening the Order history fragment*/
                 R.id.order_history -> {
                     val orderHistoryFragment = OrderHistoryFragment()
                     fragmentTransaction.replace(R.id.frame, orderHistoryFragment)
@@ -120,7 +105,6 @@ class DashboardActivity : AppCompatActivity(), DrawerLocker {
                     supportActionBar?.title = "My Previous Orders"
                 }
 
-                /*Opening the favorites fragment*/
                 R.id.favRes -> {
                     val favFragment = FavouritesFragment()
                     fragmentTransaction.replace(R.id.frame, favFragment)
@@ -128,7 +112,6 @@ class DashboardActivity : AppCompatActivity(), DrawerLocker {
                     supportActionBar?.title = "Favorite Restaurants"
                 }
 
-                /*Opening the frequently asked questions i.e. FAQ fragment*/
                 R.id.faqs -> {
                     val faqFragment = FAQFragment()
                     fragmentTransaction.replace(R.id.frame, faqFragment)
@@ -136,10 +119,8 @@ class DashboardActivity : AppCompatActivity(), DrawerLocker {
                     supportActionBar?.title = "Frequently Asked Questions"
                 }
 
-                /*Exiting the application*/
                 R.id.logout -> {
 
-                    /*Creating a confirmation dialog*/
                     val builder = AlertDialog.Builder(this@DashboardActivity)
                     builder.setTitle("Confirmation")
                         .setMessage("Are you sure you want exit?")
@@ -162,10 +143,6 @@ class DashboardActivity : AppCompatActivity(), DrawerLocker {
             return@setNavigationItemSelectedListener true
         }
 
-        /*This is how we can add header to the Navigation drawer using Kotlin.
-        * Using the XML file to add the drawer header is also correct
-        * However, we wanted to show you another and lengthy way of doing it.
-        * The method of using XML to add drawer layout is a better way*/
         val convertView = LayoutInflater.from(this@DashboardActivity).inflate(R.layout.drawer_header, null)
         val userName: TextView = convertView.findViewById(R.id.txtDrawerText)
         val userPhone: TextView = convertView.findViewById(R.id.txtDrawerSecondaryText)
@@ -176,7 +153,6 @@ class DashboardActivity : AppCompatActivity(), DrawerLocker {
         navigationView.addHeaderView(convertView)
 
 
-        /*Here we have also added clicks to the views present inside the navigation drawer*/
         userName.setOnClickListener {
             val profileFragment = ProfileFragment()
             val transaction = supportFragmentManager.beginTransaction()
@@ -199,8 +175,6 @@ class DashboardActivity : AppCompatActivity(), DrawerLocker {
 
     }
 
-    /*Since, there are a lot of ways from which Home fragment will open therefore it is better to make a
-    * separate method for it.*/
     private fun displayHome() {
         val fragment = HomeFragment()
         val transaction = supportFragmentManager.beginTransaction()
@@ -221,7 +195,6 @@ class DashboardActivity : AppCompatActivity(), DrawerLocker {
                     inputMethodManager.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
                 }
 
-                /*delaying the closing of the navigation drawer for that the motion looks smooth*/
                 Handler().postDelayed(pendingRunnable, 50)
             }
         }
@@ -238,7 +211,6 @@ class DashboardActivity : AppCompatActivity(), DrawerLocker {
         toolbar.setTitleTextAppearance(this, R.style.PoppinsTextAppearance)
     }
 
-    /*Initialising the views*/
     private fun init() {
         toolbar = findViewById(R.id.toolbar)
         drawerLayout = findViewById(R.id.drawer_layout)
@@ -246,7 +218,6 @@ class DashboardActivity : AppCompatActivity(), DrawerLocker {
     }
 
 
-    /*Setting up the opening of navigation drawer*/
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
         val f = supportFragmentManager.findFragmentById(R.id.frame)
@@ -263,7 +234,6 @@ class DashboardActivity : AppCompatActivity(), DrawerLocker {
     }
 
 
-    /*Adding custom routes from different fragments when we press the back button*/
     override fun onBackPressed() {
         val f = supportFragmentManager.findFragmentById(R.id.frame)
         when (f) {

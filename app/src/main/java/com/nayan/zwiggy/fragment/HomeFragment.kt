@@ -45,14 +45,12 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         (activity as DrawerLocker).setDrawerEnabled(true)
         progressBar = view?.findViewById(R.id.progressBar) as ProgressBar
         rlLoading = view.findViewById(R.id.rlLoading) as RelativeLayout
         rlLoading.visibility = View.VISIBLE
 
-        /*A separate method for setting up our recycler view*/
         setUpRecycler(view)
 
         setHasOptionsMenu(true)
@@ -63,11 +61,9 @@ class HomeFragment : Fragment() {
     private fun setUpRecycler(view: View) {
         recyclerRestaurant = view.findViewById(R.id.recyclerRestaurants) as RecyclerView
 
-        /*Create a queue for sending the request*/
         val queue = Volley.newRequestQueue(activity as Context)
 
 
-        /*Check if the internet is present or not*/
         if (ConnectionManager().isNetworkAvailable(activity as Context)) {
 
             /*Create a JSON object request*/
@@ -78,7 +74,6 @@ class HomeFragment : Fragment() {
                 Response.Listener<JSONObject> { response ->
                     rlLoading.visibility = View.GONE
 
-                    /*Once response is obtained, parse the JSON accordingly*/
                     try {
                         val data = response.getJSONObject("data")
                         val success = data.getBoolean("success")
@@ -115,13 +110,11 @@ class HomeFragment : Fragment() {
                     Toast.makeText(activity as Context, error?.message, Toast.LENGTH_SHORT).show()
                 }) {
 
-                /*Send the headers using the below method*/
                 override fun getHeaders(): MutableMap<String, String> {
                     val headers = HashMap<String, String>()
                     headers["Content-type"] = "application/json"
 
-                    /*The below used token will not work, kindly use the token provided to you in the training*/
-                    headers["token"] = "9bf534118365f1"
+                    headers["token"] = "4b564f6ea2296c"
                     return headers
                 }
             }

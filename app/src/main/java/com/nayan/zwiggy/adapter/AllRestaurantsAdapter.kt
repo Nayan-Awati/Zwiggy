@@ -117,12 +117,6 @@ class AllRestaurantsAdapter(private var restaurants: ArrayList<Restaurants>, val
 
         override fun doInBackground(vararg params: Void?): Boolean {
 
-            /*
-            Mode 1 -> Check DB if the book is favourite or not
-            Mode 2 -> Save the book into DB as favourite
-            Mode 3 -> Remove the favourite book
-            */
-
             when (mode) {
 
                 1 -> {
@@ -151,10 +145,6 @@ class AllRestaurantsAdapter(private var restaurants: ArrayList<Restaurants>, val
     }
 
 
-    /*Since the outcome of the above background method is always a boolean, we cannot use the above here.
-    * We require the list of favourite restaurants here and hence the outcome would be list.
-    * For simplicity we obtain the list of restaurants and then extract their ids which is then compared to the ids
-    * inside the list sent to the adapter */
 
     class GetAllFavAsyncTask(
         context: Context

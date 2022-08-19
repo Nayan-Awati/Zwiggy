@@ -79,15 +79,12 @@ class CartActivity : AppCompatActivity() {
         recyclerCart = findViewById(R.id.recyclerCartItems)
         val dbList = GetItemsFromDBAsync(applicationContext).execute().get()
 
-        /*Extracting the data saved in database and then using Gson to convert the String of food items into a list
-        * of food items*/
         for (element in dbList) {
             orderList.addAll(
                 Gson().fromJson(element.foodItems, Array<FoodItem>::class.java).asList()
             )
         }
 
-        /*If the order list extracted from DB is empty we do not display the cart*/
         if (orderList.isEmpty()) {
             rlCart.visibility = View.GONE
             rlLoading.visibility = View.VISIBLE
@@ -95,8 +92,6 @@ class CartActivity : AppCompatActivity() {
             rlCart.visibility = View.VISIBLE
             rlLoading.visibility = View.GONE
         }
-
-        /*Else we display the cart using the cart item adapter*/
         cartItemAdapter = CartItemAdapter(orderList, this@CartActivity)
         val mLayoutManager = LinearLayoutManager(this@CartActivity)
         recyclerCart.layoutManager = mLayoutManager
@@ -108,7 +103,6 @@ class CartActivity : AppCompatActivity() {
     private fun placeOrder() {
         btnPlaceOrder = findViewById(R.id.btnConfirmOrder)
 
-        /*Before placing the order, the user is displayed the price or the items on the button for placing the orders*/
         var sum = 0
         for (i in 0 until orderList.size) {
             sum += orderList[i].cost as Int
@@ -126,7 +120,6 @@ class CartActivity : AppCompatActivity() {
     private fun sendServerRequest() {
         val queue = Volley.newRequestQueue(this)
 
-        /*Creating the json object required for placing the order*/
         val jsonParams = JSONObject()
         jsonParams.put(
             "user_id",
@@ -155,16 +148,11 @@ class CartActivity : AppCompatActivity() {
                 try {
                     val data = it.getJSONObject("data")
                     val success = data.getBoolean("success")
-                    /*If order is placed, clear the DB for the recently added items
-                    * Once the DB is cleared, notify the user that the order has been placed*/
                     if (success) {
                         val clearCart =
                             ClearDBAsync(applicationContext, resId.toString()).execute().get()
                         RestaurantMenuAdapter.isCartEmpty = true
 
-                        /*Here we have done something new. We used the Dialog class to display the order placed message
-                        * It is just a neat trick to avoid creating a whole new activity for a very small purpose
-                        * Guess, you learned something new here*/
                         val dialog = Dialog(
                             this@CartActivity,
                             android.R.style.Theme_Black_NoTitleBar_Fullscreen
@@ -197,7 +185,6 @@ class CartActivity : AppCompatActivity() {
                     val headers = HashMap<String, String>()
                     headers["Content-type"] = "application/json"
 
-                    //The below used token will not work, kindly use the token provided to you in the training
                     headers["token"] = "4b564f6ea2296c"
                     return headers
                 }
@@ -208,7 +195,6 @@ class CartActivity : AppCompatActivity() {
     }
 
 
-    /*Asynctask class for extracting the items from the database*/
     class GetItemsFromDBAsync(context: Context) : AsyncTask<Void, Void, List<OrderEntity>>() {
         val db = Room.databaseBuilder(context, RestaurantDatabase::class.java, "res-db").build()
         override fun doInBackground(vararg params: Void?): List<OrderEntity> {
@@ -217,7 +203,6 @@ class CartActivity : AppCompatActivity() {
 
     }
 
-    /*Asynctask class for clearing the recently added items from the database*/
     class ClearDBAsync(context: Context, val resId: String) : AsyncTask<Void, Void, Boolean>() {
         val db = Room.databaseBuilder(context, RestaurantDatabase::class.java, "res-db").build()
         override fun doInBackground(vararg params: Void?): Boolean {
@@ -228,8 +213,6 @@ class CartActivity : AppCompatActivity() {
 
     }
 
-    /*When the user presses back, we clear the cart so that when the returns to the cart, there is no
-    * redundancy in the entries*/
     override fun onSupportNavigateUp(): Boolean {
         if (ClearDBAsync(applicationContext, resId.toString()).execute().get()) {
             RestaurantMenuAdapter.isCartEmpty = true

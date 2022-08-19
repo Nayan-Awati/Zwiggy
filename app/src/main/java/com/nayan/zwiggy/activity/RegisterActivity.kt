@@ -19,10 +19,6 @@ import com.nayan.zwiggy.util.Validations
 import org.json.JSONObject
 import java.lang.Exception
 
-/* The registration activity is responsible for registering the users to the app
-* This will send the fields to server and the user will get registered if all the fields were correct.
-* The user receives response in the form of JSON
-* If the login is true, the user is navigated to the dashboard else appropriate error message is displayed*/
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -207,7 +203,6 @@ class RegisterActivity : AppCompatActivity() {
                 val headers = HashMap<String, String>()
                 headers["Content-type"] = "application/json"
 
-                /*The below used token will not work, kindly use the token provided to you in the training*/
                 headers["token"] = "4b564f6ea2296c"
                 return headers
             }

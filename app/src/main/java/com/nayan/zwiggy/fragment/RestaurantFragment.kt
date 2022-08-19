@@ -138,8 +138,7 @@ class RestaurantFragment : Fragment() {
                     val headers = HashMap<String, String>()
                     headers["Content-type"] = "application/json"
 
-                    /*The below used token will not work, kindly use the token provided to you in the training*/
-                    headers["token"] = "9bf534118365f1"
+                    headers["token"] = "4b564f6ea2296c"
                     return headers
                 }
             }
@@ -152,12 +151,8 @@ class RestaurantFragment : Fragment() {
 
     private fun proceedToCart() {
 
-        /*Here we see the implementation of Gson.
-        * Whenever we want to convert the custom data types into simple data types
-        * which can be transferred across for utility purposes, we will use Gson*/
         val gson = Gson()
 
-        /*With the below code, we convert the list of order items into simple string which can be easily stored in DB*/
         val foodItems = gson.toJson(orderList)
 
         val async = ItemsOfCart(activity as Context, resId.toString(), foodItems, 1).execute()

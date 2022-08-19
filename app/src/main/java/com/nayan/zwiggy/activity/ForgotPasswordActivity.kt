@@ -16,12 +16,6 @@ import com.nayan.zwiggy.util.FORGOT_PASSWORD
 import com.nayan.zwiggy.util.Validations
 import org.json.JSONObject
 
-/*In this activity, we will send the email and the mobile number to the server.
- Kindly use the registered email and mobile number only, otherwise the OTP won't be sent to your email id.
- The received OTP will be valid for next 24 hours and you will not receive more than one email per day*/
-
-/*Once the OTP is shared to you on your registered email id, you can then send it along with the mobile number\
-* and the new password. The mobile number can be stored in an intent and sent to the next activity from here itself*/
 
 class ForgotPasswordActivity : AppCompatActivity() {
 
@@ -149,7 +143,6 @@ class ForgotPasswordActivity : AppCompatActivity() {
                     val headers = HashMap<String, String>()
                     headers["Content-type"] = "application/json"
 
-                    /*The below used token will not work, kindly use the token provided to you in the training*/
                     headers["token"] = "4b564f6ea2296c"
                     return headers
                 }

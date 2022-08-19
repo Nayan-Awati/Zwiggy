@@ -42,7 +42,6 @@ class OrderHistoryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_order_history, container, false)
         (activity as DrawerLocker).setDrawerEnabled(true)
         llHasOrders = view.findViewById(R.id.llHasOrders)
@@ -115,8 +114,7 @@ class OrderHistoryFragment : Fragment() {
                 val headers = HashMap<String, String>()
                 headers["Content-type"] = "application/json"
 
-                /*The below used token will not work, kindly use the token provided to you in the training*/
-                headers["token"] = "9bf534118365f1"
+                headers["token"] = "4b564f6ea2296c"
                 return headers
             }
         }
